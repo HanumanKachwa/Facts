@@ -50,7 +50,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var factItem = self.manager.getFactItem(representedByRowNumber: indexPath.row)
+        let factItem = self.manager.getFactItem(representedByRowNumber: indexPath.row)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FactItemCollectionViewCell.identifier, for: indexPath) as! FactItemCollectionViewCell
 
         cell.imageView?.image = #imageLiteral(resourceName: "image_not_available")
@@ -70,16 +70,23 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         return factItem?.size ?? defaultItemSize
     }
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let factItem = self.manager.getFactItem(representedByRowNumber: indexPath.row) else {
+            return
+        }
+        let detailManager = DetailManager(facItem: factItem)
+        let detailVC = DetailViewController(manager: detailManager)
+        self.navigationController?.pushViewController(detailVC, animated: true)
+    }
 }
 
 extension ViewController {
     @objc
     func reloadView(){
-        refreshControl.endRefreshing()
-        MBProgressHUD.showAdded(to: self.view, animated: true)
+        refreshControl.beginRefreshing()
         manager.fetchFacts { (error) in
             DispatchQueue.main.async {
-                MBProgressHUD.hide(for: self.view, animated: true)
+                self.refreshControl.endRefreshing()
                 self.title = self.manager.getCountryTitle()
                 self.displayErrorAlert(error)
                 self.collectionView?.reloadData()
