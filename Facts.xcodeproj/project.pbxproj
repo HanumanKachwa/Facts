@@ -19,6 +19,8 @@
 		BAC9C7B120DA974500596846 /* CountryFacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC9C7AF20DA974500596846 /* CountryFacts.swift */; };
 		BAC9C7B420DA980B00596846 /* CountryFactsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC9C7B320DA980B00596846 /* CountryFactsAPI.swift */; };
 		BAC9C7B620DA9A7F00596846 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC9C7B520DA9A7F00596846 /* ErrorHandler.swift */; };
+		BAC9C7B820DAAC4400596846 /* ViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC9C7B720DAAC4400596846 /* ViewManager.swift */; };
+		BAC9C7BA20DAB5BC00596846 /* FactItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC9C7B920DAB5BC00596846 /* FactItemCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		BAC9C7AF20DA974500596846 /* CountryFacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryFacts.swift; sourceTree = "<group>"; };
 		BAC9C7B320DA980B00596846 /* CountryFactsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryFactsAPI.swift; sourceTree = "<group>"; };
 		BAC9C7B520DA9A7F00596846 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
+		BAC9C7B720DAAC4400596846 /* ViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewManager.swift; sourceTree = "<group>"; };
+		BAC9C7B920DAB5BC00596846 /* FactItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactItemCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +127,8 @@
 			children = (
 				BA4A4F6720D9B15D002AEE57 /* AppDelegate.swift */,
 				BA4A4F6920D9B15D002AEE57 /* ViewController.swift */,
+				BAC9C7B720DAAC4400596846 /* ViewManager.swift */,
+				BAC9C7B920DAB5BC00596846 /* FactItemCollectionViewCell.swift */,
 				BAC9C7B520DA9A7F00596846 /* ErrorHandler.swift */,
 				BAC9C7AD20DA974500596846 /* Modal */,
 				BAC9C7B220DA97F900596846 /* Services */,
@@ -313,12 +319,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Facts/Pods-Facts-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
@@ -359,6 +367,8 @@
 				BAC9C7B620DA9A7F00596846 /* ErrorHandler.swift in Sources */,
 				BAC9C7B420DA980B00596846 /* CountryFactsAPI.swift in Sources */,
 				BA4A4F6820D9B15D002AEE57 /* AppDelegate.swift in Sources */,
+				BAC9C7BA20DAB5BC00596846 /* FactItemCollectionViewCell.swift in Sources */,
+				BAC9C7B820DAAC4400596846 /* ViewManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
