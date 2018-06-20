@@ -12,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="dBs-If-ejW">
             <objects>
-                <viewController id="LFN-s8-YPa" sceneMemberID="viewController">
+                <viewController id="LFN-s8-YPa" customClass="ViewController" customModule="Facts" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="k1Z-Cb-a6Q"/>
                         <viewControllerLayoutGuide type="bottom" id="QQn-bT-y0S"/>
