@@ -8,23 +8,32 @@
 
 import UIKit
 import MBProgressHUD
+import Kingfisher
 
 class ViewController: UIViewController {
+    @IBOutlet weak var collectionView: UICollectionView?
+    
+    let defaultItemSize = CGSize(width: 50, height: 50)
+    
+    let refreshControl: UIRefreshControl = {
+        let tempRefreshControl = UIRefreshControl()
+        tempRefreshControl.attributedTitle = NSAttributedString(string:"Pull to refresh")
+        tempRefreshControl.addTarget(self, action: #selector(ViewController.reloadView), for: UIControlEvents.valueChanged)
+        return tempRefreshControl
+    }()
+
+    let manager = ViewManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        MBProgressHUD.showAdded(to: self.view, animated: true)
-        CountryFactsAPI.getFacts { [weak self] (facts, error) in
-            guard let weakSelf = self else {
-                return
-            }
-            DispatchQueue.main.async {
-                MBProgressHUD.hide(for: weakSelf.view, animated: true)
-                weakSelf.displayErrorAlert(error)
-            }
-
-        }
+        
+        collectionView?.dataSource = self
+        collectionView?.delegate = self
+        
+        collectionView?.addSubview(refreshControl)
+        
+        reloadView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,6 +42,50 @@ class ViewController: UIViewController {
     }
 
 
+}
+
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.manager.factsCount()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var factItem = self.manager.getFactItem(representedByRowNumber: indexPath.row)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FactItemCollectionViewCell.identifier, for: indexPath) as! FactItemCollectionViewCell
+
+        cell.imageView?.image = #imageLiteral(resourceName: "image_not_available")
+        if let imageUrlString = factItem?.imageHref, let url = URL(string: imageUrlString) {
+            cell.imageView?.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "image_not_available"), completionHandler: { (image, error, cache, url) in
+                let maxWidth = min(image?.size.width ?? self.defaultItemSize.width, collectionView.bounds.size.width)
+                factItem?.size = CGSize(width: maxWidth, height: image?.size.height ?? self.defaultItemSize.height)
+                self.collectionView?.collectionViewLayout.invalidateLayout()
+            })
+        }
+        cell.titleLabel?.text = factItem?.title
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let factItem = self.manager.getFactItem(representedByRowNumber: indexPath.row)
+        return factItem?.size ?? defaultItemSize
+    }
+
+}
+
+extension ViewController {
+    @objc
+    func reloadView(){
+        refreshControl.endRefreshing()
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        manager.fetchFacts { (error) in
+            DispatchQueue.main.async {
+                MBProgressHUD.hide(for: self.view, animated: true)
+                self.title = self.manager.getCountryTitle()
+                self.displayErrorAlert(error)
+                self.collectionView?.reloadData()
+            }
+        }
+    }
 }
 
 extension UIViewController {

@@ -10,4 +10,5 @@ target 'Facts' do
     pod 'TPKeyboardAvoiding'
     pod 'ReachabilitySwift'
     pod 'MBProgressHUD'
+    pod 'Kingfisher'
 end
